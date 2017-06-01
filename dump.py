@@ -22,7 +22,6 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(10):
     except:
         continue
     for word in new_tweet:
-        # print "NEW WORD:%s\n" % word
         if dict.check(word):
             # spelling is correct
             pass
