@@ -12,37 +12,47 @@ auth.set_access_token(a_token, a_secret)
 api = tweepy.API(auth)
 
 import enchant
+import re
 
 dict = enchant.Dict("en_US")
 
-for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(10):
+for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(50):
     incorrect = False
     try:
         new_tweet = str(tweet.text).split()
     except:
         continue
     for word in new_tweet:
-        if dict.check(word):
-            # spelling is correct
-            pass
+        if not word:
+            break
         elif word == "RT":
             #ignore word
-            pass
+            break
         elif word == "&amp;":
             #ignore word
-            pass
+            break
         elif word.startswith("#"):
-            pass
+            break
             #ignore word
         elif word.startswith("@"):
             #ignore word
+            break
+        elif word.startswith("http"):
+            # this is a link...ignore as well
+            break
+
+        word = re.sub('\W+','', word)
+        if not word:
+            break
+        if dict.check(word):
+            # spelling is correct
             pass
         else:
-            # print("WRONG: %s" % word)
+            print("WRONG: %s" % word)
             incorrect = True
-            break
+
     if incorrect == True:
-        print new_tweet
+        print "INCORRECT TWEET: %s" % tweet.text
 
 '''import enchant
 
