@@ -13,11 +13,19 @@ api = tweepy.API(auth)
 
 import enchant
 import re
+import string
 
 dict = enchant.Dict("en_US")
+incorrect = False
+
+def checking(word):
+    if not word:
+        pass
+    elif not dict.check(word):
+        print("WRONG: %s" % word)
+        incorrect = True
 
 for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(50):
-    incorrect = False
     try:
         new_tweet = str(tweet.text).split()
     except:
@@ -40,16 +48,31 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(50):
         elif word.startswith("http"):
             # this is a link...ignore as well
             break
-
-        word = re.sub('\W+','', word)
-        if not word:
+        elif word == "Obama":
+            # enchant sees this as not a word
             break
-        if dict.check(word):
-            # spelling is correct
-            pass
+        elif word == "Facebook":
+            # enchant sees this as not a word
+            break
+        elif ("'" in word) and not str(word).startswith("'") and not str(word).endswith("'") :
+            # if there is an apostrophe in between a word, it usually means it was a conjuntion
+            # if there is an apostrophe at the end or the begininng, it usually means that it is part of a quote
+            break
+        elif "..." in word:
+            string.replace(word, "...", " ")
+            new_word =str(word).split()
+            for temp in new_word:
+                checking(temp)
+            break
+        elif "/" in word:
+            string.replace(word, "/", " ")
+            new_word =str(word).split()
+            for temp in new_word:
+                checking(temp)
+            break
         else:
-            print("WRONG: %s" % word)
-            incorrect = True
+            word = re.sub('\W+','', word)
+            checking(word)
 
     if incorrect == True:
         print "INCORRECT TWEET: %s" % tweet.text
