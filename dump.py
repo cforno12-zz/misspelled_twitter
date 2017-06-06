@@ -16,7 +16,11 @@ import re
 
 dict = enchant.Dict("en_US")
 
-for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(100):
+username = raw_input("Please enter a Twitter username that you would like to search through (preferably one that is not private):\n")
+
+num_tweets = raw_input("How many recent tweets are you trying to search through?:\n")
+
+for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
     incorrect = False
     try:
         new_tweet = str(tweet.text).split()
@@ -52,6 +56,9 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(100):
         elif word == "Healthcare":
             # enchant sees this as not a word
             break
+        elif word == "healthcare":
+            # enchant sees this as not a word
+            break
         elif ("'" in word) and not str(word).startswith("'") and not str(word).endswith("'") :
             # if there is an apostrophe in between a word, it usually means it was a conjuntion
             # if there is an apostrophe at the end or the begininng, it usually means that it is part of a quote
@@ -64,6 +71,9 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(100):
             new_word = str(word).split()
             for temp in new_word:
                 temp = temp.strip()
+                temp = re.sub('\W+','', temp)
+                if not word:
+                    continue
                 if not dict.check(temp):
                     print ("WRONG: %s" % temp)
                     incorrect = True
@@ -73,10 +83,36 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(100):
             new_word =str(word).split()
             for temp in new_word:
                 temp = temp.strip()
+                temp = re.sub('\W+','', temp)
                 if not dict.check(temp):
                     print ("WRONG: %s" % temp)
                     incorrect = True
             break
+        elif "-" in word:
+            word = str.replace(word, "-", " ")
+            new_word = str(word).split()
+            for temp in new_word:
+                temp.strip()
+                temp = re.sub('\W+', '', temp)
+                if not word:
+                    continue
+                if not dict.check(temp):
+                    print ("WRONG: %s" % temp)
+                    incorrect = True
+            break
+        elif "," in word:
+            word = str.replace(word, ",", " ")
+            new_word = str(word).split()
+            for temp in new_word:
+                temp.strip()
+                temp = re.sub('\W+', '', temp)
+                if not word:
+                    continue
+                if not dict.check(temp):
+                    print ("WRONG: %s" % temp)
+                    incorrect = True
+            break
+
         else:
             #this line removes all special charaters
             word = re.sub('\W+','', word)
@@ -89,11 +125,3 @@ for tweet in tweepy.Cursor(api.user_timeline, id="realDonaldTrump").items(100):
 
     if incorrect == True:
         print "INCORRECT TWEET: %s" % tweet.text
-
-'''import enchant
-
-dict = enchant.Dict("en_US")
-
-file = open("trump.txt", "w")
-
-file.close'''
