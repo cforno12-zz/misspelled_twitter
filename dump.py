@@ -40,8 +40,8 @@ for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
             break
         elif word.startswith("#"):
             break
-            #ignore word because this is a "trend"
-        elif word.startswith("@"):
+            #ignore word because this is a "trend".
+        elif word.startswith("@") or word.startswith(".@"):
             #ignore word because this is a username
             break
         elif word.startswith("http"):
@@ -125,3 +125,13 @@ for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
 
     if incorrect == True:
         print "INCORRECT TWEET: %s" % tweet.text
+
+
+# GUI code
+#from tkinter import *
+
+#root = Tk()
+
+#label = Label(root, text="This is really easy")
+#label.pack()
+#root.mainloop()
