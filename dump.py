@@ -18,7 +18,7 @@ dict = enchant.Dict("en_US")
 
 username = raw_input("Please enter a Twitter username that you would like to search through (preferably one that is not private):\n")
 
-num_tweets = raw_input("How many recent tweets are you trying to search through?:\n")
+num_tweets = int(input("How many recent tweets are you trying to search through?:\n"))
 
 for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
     incorrect = False
@@ -125,13 +125,3 @@ for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
 
     if incorrect == True:
         print "INCORRECT TWEET: %s" % tweet.text
-
-
-# GUI code
-#from tkinter import *
-
-#root = Tk()
-
-#label = Label(root, text="This is really easy")
-#label.pack()
-#root.mainloop()
