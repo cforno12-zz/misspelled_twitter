@@ -1,0 +1,9 @@
+How I want the Twitter app to be set up:
+
+- Big title that says "Misspelled Twitter" with Twitter font and a twitter logo somewhere
+- Try to make it look like Twitter was behind this app, use their style of design as best as possible
+- use two text boxes to input for username and number of recent tweets
+- make a run button at the bottom
+- TODO: think of a way to output the incorrect words and whole tweets
+  - a non-writable text box?
+  - output a text file
