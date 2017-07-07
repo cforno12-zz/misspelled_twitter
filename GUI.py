@@ -1,45 +1,24 @@
-from Tkinter import *
-import sys
-import os
+import Tkinter as tk
 
-class TextOut(Text()):
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.grid()
+        self.createWidgets()
+    def createWidgets(self):
 
-    def write(self, s):
-        self.insert(self.CURRENT, s)
+        #Attempted to make a background throughout the app
+        # bg = tk.PhotoImage('/Users/CrisForno/Documents/wallpapers/suit_logo_OSX.png')
+        # self.bg_label = tk.Label(self, image=bg)
+        # self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-    def flush(self):
-        pass
+        self.twitterHandle = tk.Entry(self, fg='#00aced')
+        self.twitterHandle.grid()
 
+        self.quitButton = tk.Button(self, text='Quit',
+                                    command=self.quit)
+        self.quitButton.grid()
 
-if __name__ == '__main__':
-    root = Tk()
-    text = TextOut(root)
-    sys.stdout = text
-    text.pack(expand=True, fill=root.BOTH)
-    root.mainloop()
-
-root = Tk()
-
-frame = Frame(root)
-frame.pack()
-
-e = Entry(root)
-e.pack(side=TOP)
-
-e.delete(0, END)
-e.insert(0, "Insert Twitter username here.")
-
-root.button = Button(
-    frame, text="QUIT", fg="red", command=frame.quit
-)
-
-root.button.pack(side=BOTTOM)
-
-'''self.hi_there = Button(frame, text="Hello", command=self.say_hi)
-   self.hi_there.pack(side=LEFT)'''
-
-text = Text(root)
-text.pack()
-text.insert(END, output)
-
-root.mainloop()
+app = Application()
+app.master.title('Misspelled Twitter')
+app.mainloop()
