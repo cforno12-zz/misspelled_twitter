@@ -11,7 +11,7 @@ This project was inspired by Trump's infamous "covfefe" tweet he posted, and del
 2. "cd" into the directory
 3. Run this in your shell:
    ```
-   chmod +x dump.py
-   python dump.py
+   chmod +x main.py
+   python main.py
    ```
 4. Enter a twitter handle when prompted (only does public accounts) and the number of most recent tweets.
