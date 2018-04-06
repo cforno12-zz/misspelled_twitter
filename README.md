@@ -8,7 +8,7 @@ This project was inspired by Trump's infamous "covfefe" tweet he posted, and del
 
 ## How to run it:
 1. Download the zip file, unzip it.
-2. "cd" into the directory
+2. ```cd``` into the directory
 3. Run this in your shell:
    ```
    chmod +x main.py
