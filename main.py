@@ -18,7 +18,7 @@ dict = enchant.Dict("en_US")
 
 username = raw_input("Please enter a Twitter username that you would like to search through (preferably one that is not private):\n")
 
-num_tweets = raw_input("How many recent tweets are you trying to search through?:\n")
+num_tweets = int(input("How many recent tweets are you trying to search through?:\n"))
 
 for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
     incorrect = False
@@ -40,8 +40,8 @@ for tweet in tweepy.Cursor(api.user_timeline, id=username).items(num_tweets):
             break
         elif word.startswith("#"):
             break
-            #ignore word because this is a "trend"
-        elif word.startswith("@"):
+            #ignore word because this is a "trend".
+        elif word.startswith("@") or word.startswith(".@"):
             #ignore word because this is a username
             break
         elif word.startswith("http"):
